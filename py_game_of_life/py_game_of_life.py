@@ -13,7 +13,6 @@ class PyGameOfLife:
         self.board = self.initialize_board(self.dead)
 
     def run(self):
-        self.clear()
         self.place_glider()
         self.print_screen()
         input('Press return to continue.')
@@ -21,9 +20,7 @@ class PyGameOfLife:
         try:
             while True:
                 self.calculate_life()
-                self.clear()
                 self.print_screen()
-                self.cycle_count += 1
                 time.sleep(0.125)
         except KeyboardInterrupt:
             pass
@@ -42,29 +39,27 @@ class PyGameOfLife:
 
         for y_coordinate in range(0, self.y_axis_length):
             for x_coordinate in range(0, self.x_axis_length):
-                field = self.get_field(x_coordinate, y_coordinate)
-
+                cell = self.get_cell(x_coordinate, y_coordinate)
                 living_neighbors = self.count_living_neighbours(
                     x_coordinate,
                     y_coordinate
                 )
+                result = self.dead
 
-                if field == self.alive:
+                if cell == self.alive:
                     if living_neighbors is 2 or living_neighbors is 3:
                         result = self.alive
-                    else:
-                        result = self.dead
                 else:
                     if living_neighbors == 3:
                         result = self.alive
-                    else:
-                        result = self.dead
 
                 next_board[y_coordinate][x_coordinate] = result
 
         self.board = next_board
+        self.cycle_count += 1
 
     def print_screen(self):
+        self.clear()
         output = 'Cycle: ' + str(self.cycle_count) + '\n'
         line_count = 0
 
@@ -79,7 +74,7 @@ class PyGameOfLife:
 
         print(output)
 
-    def get_field(self, x_coordinate, y_coordinate):
+    def get_cell(self, x_coordinate, y_coordinate):
         if x_coordinate < 0:
             x_coordinate += self.x_axis_length
         elif x_coordinate >= self.x_axis_length:
@@ -103,28 +98,28 @@ class PyGameOfLife:
     def count_living_neighbours(self, x_coordinate, y_coordinate):
         count = 0
 
-        if self.get_field(x_coordinate + 1, y_coordinate + 1) is self.alive:
+        if self.get_cell(x_coordinate + 1, y_coordinate + 1) == self.alive:
             count += 1
 
-        if self.get_field(x_coordinate + 1, y_coordinate - 1) is self.alive:
+        if self.get_cell(x_coordinate + 1, y_coordinate - 1) == self.alive:
             count += 1
 
-        if self.get_field(x_coordinate - 1, y_coordinate - 1) is self.alive:
+        if self.get_cell(x_coordinate - 1, y_coordinate - 1) == self.alive:
             count += 1
 
-        if self.get_field(x_coordinate - 1, y_coordinate + 1) is self.alive:
+        if self.get_cell(x_coordinate - 1, y_coordinate + 1) == self.alive:
             count += 1
 
-        if self.get_field(x_coordinate, y_coordinate + 1) is self.alive:
+        if self.get_cell(x_coordinate, y_coordinate + 1) == self.alive:
             count += 1
 
-        if self.get_field(x_coordinate, y_coordinate - 1) is self.alive:
+        if self.get_cell(x_coordinate, y_coordinate - 1) == self.alive:
             count += 1
 
-        if self.get_field(x_coordinate + 1, y_coordinate) is self.alive:
+        if self.get_cell(x_coordinate + 1, y_coordinate) == self.alive:
             count += 1
 
-        if self.get_field(x_coordinate - 1, y_coordinate) is self.alive:
+        if self.get_cell(x_coordinate - 1, y_coordinate) == self.alive:
             count += 1
 
         return count
