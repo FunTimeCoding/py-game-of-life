@@ -44,16 +44,13 @@ class PyGameOfLife:
                     x_coordinate,
                     y_coordinate
                 )
-                result = self.dead
 
                 if cell == self.alive:
                     if living_neighbors is 2 or living_neighbors is 3:
-                        result = self.alive
+                        next_board[y_coordinate][x_coordinate] = self.alive
                 else:
                     if living_neighbors == 3:
-                        result = self.alive
-
-                next_board[y_coordinate][x_coordinate] = result
+                        next_board[y_coordinate][x_coordinate] = self.alive
 
         self.board = next_board
         self.cycle_count += 1
