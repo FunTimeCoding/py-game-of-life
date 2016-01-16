@@ -88,12 +88,8 @@ class PyGameOfLife:
         return self.board[y_coordinate][x_coordinate]
 
     def initialize_board(self, initial_value):
-        new_list = []
-
-        for row in range(self.y_axis_length):
-            new_list.append([initial_value] * self.x_axis_length)
-
-        return new_list
+        return [[initial_value] * self.x_axis_length for _ in
+                range(self.y_axis_length)]
 
     def count_living_neighbours(self, x_coordinate, y_coordinate):
         count = 0
