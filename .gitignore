@@ -1,7 +1,9 @@
-*.pyc
-*.egg-info
-.coverage
-.pyvenv
-.cache
-.tox
 build
+.venv
+.tox
+py_game_of_life.egg-info
+*.pyc
+
+# pytest
+.coverage
+.cache
